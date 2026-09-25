@@ -1,1 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>StudyVerse Notes</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body, html {
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      background-color: #0d1117;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    /* Fullscreen iframe for Google Web App */
+    #appFrame {
+      width: 100%;
+      height: 100%;
+      border: none;
+      display: block;
+    }
+
+    /* Loading Screen Container */
+    #loadingScreen {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: #0d1117;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      z-index: 9999;
+      transition: opacity 0.6s ease, visibility 0.6s ease;
+    }
+
+    /* Title Logo Styling */
+    .brand-container {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      margin-bottom: 30px;
+    }
+
+    .book-icon {
+      font-size: 2.8rem;
+      animation: float 2s ease-in-out infinite;
+    }
+
+    .brand-title {
+      font-size: 2.4rem;
+      font-weight: 800;
+      color: #38b6ff; /* Cyan blue matching your image */
+      letter-spacing: -0.5px;
+      text-shadow: 0 0 20px rgba(56, 182, 255, 0.35);
+    }
+
+    /* Modern Circular Spinner */
+    .spinner {
+      width: 48px;
+      height: 48px;
+      border: 4px solid rgba(56, 182, 255, 0.15);
+      border-top-color: #38b6ff;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+    }
+
+    .loading-text {
+      color: #8b949e;
+      font-size: 0.95rem;
+      font-weight: 500;
+      margin-top: 15px;
+      letter-spacing: 0.5px;
+    }
+
+    /* Animations */
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-6px); }
+    }
+
+    /* Hide class */
+    .fade-out {
+      opacity: 0 !important;
+      visibility: hidden !important;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Loading Screen -->
+  <div id="loadingScreen">
+    <div class="brand-container">
+      <span class="book-icon">📚</span>
+      <h1 class="brand-title">StudyVerse Notes</h1>
+    </div>
+    <div class="spinner"></div>
+    <p class="loading-text">Loading notes, please wait...</p>
+  </div>
+
+  <!-- Google Apps Script Web App -->
+  <iframe 
+    id="appFrame" 
+    src="https://script.google.com/macros/s/AKfycbzBPOh75x8NdWBL7Fbbey9buIVpDdHbiyQuVUz9yKtWYLU8Ggi4X22hLdsWbRRg38N7/exec"
+    onload="hideLoader()">
+  </iframe>
+
+  <script>
+    function hideLoader() {
+      const loader = document.getElementById('loadingScreen');
+      // Thoda smooth feel ke liye 500ms delay ke baad fade-out
+      setTimeout(() => {
+        loader.classList.add('fade-out');
+      }, 500);
+    }
+
+    // Safety fallback: Agar slow network ho to max 5s me loader automatically hat jaye
+    setTimeout(() => {
+      const loader = document.getElementById('loadingScreen');
+      if (loader && !loader.classList.contains('fade-out')) {
+        loader.classList.add('fade-out');
+      }
+    }, 5000);
+  </script>
+
+</body>
+</html>
 
